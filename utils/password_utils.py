@@ -7,7 +7,7 @@ def generate_password(length: int = 15) -> str:
     return "".join(random.sample(charset, length))
 
 
-def handle_weak_password(password: str) -> dict:
+def handle_weak_password(password: str) -> str:
     new_password = password
 
     symbols = string.punctuation
@@ -32,13 +32,10 @@ def handle_weak_password(password: str) -> dict:
     if not any(char in symbols for char in password):
         new_password += random.choice(symbols)
 
-    return {
-        "weak": password != new_password,
-        "password": new_password,
-    }
+    return new_password
 
 
-def check_secure_password(password: str) -> dict:
+def check_secure_password(password: str) -> str:
     errors = []
 
     if not any(char.isupper() for char in password):
@@ -51,6 +48,6 @@ def check_secure_password(password: str) -> dict:
         errors.append("A senha não contém símbolo.")
 
     if errors:
-        return {"weak": True, "errors": errors}
+        return ", ".join(errors)  # Return comma-separated errors
     else:
-        return {"weak": False, "message": "password strong."}
+        return "Senha forte!"
