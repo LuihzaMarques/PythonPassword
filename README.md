@@ -1,8 +1,8 @@
 # PythonPassword
----
-Projeto que usa fastAPI para geração e validação de uma senha  
 
-Para rodar o projeto é só clonar e executar o comando:
+Projeto que usa fastAPI para geração e validação de senhas  
+
+Para rodar o projeto é só clonar o repositório e executar o comando:
 
 ```sh
 uvicorn mainAPI:app --reload:
