@@ -18,6 +18,16 @@ app = FastAPI(
     version="1.0",
 )
 
+@app.post("/solicitar_senha")
+async def solicitar_senha(desc:str):
+
+    generated_password = generate_password()
+    data = {generated_password: desc}
+    message = "senha: " + generated_password + " finalidade: " + desc
+    return ResponseStatus(data=data,message = message,path="/solicitar_senha")
+    
+         
+         
 
 @app.get("/criar_nova_senha")
 async def criar_nova_senha():
