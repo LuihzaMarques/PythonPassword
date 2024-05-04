@@ -3,6 +3,11 @@ from datetime import datetime
 from utils.password_utils import generate_password, handle_weak_password, check_secure_password
 from pydantic import BaseModel
 
+class PassWord(BaseModel):
+    senha: str
+    descricao: str
+
+passwords = []
 
 class ResponseStatus(BaseModel):
     statusCode: int = 200
@@ -23,10 +28,22 @@ async def solicitar_senha(desc:str):
 
     generated_password = generate_password()
     data = {generated_password: desc}
+    passwords.append(PassWord(senha = generated_password,descricao = desc))
     message = "senha: " + generated_password + " finalidade: " + desc
     return ResponseStatus(data=data,message = message,path="/solicitar_senha")
     
-         
+
+@app.get("/listar_senhas")
+async def listar_senhas():
+   
+    data = {}
+    for senha in passwords:
+        data[senha.senha] = senha.descricao
+            
+    return ResponseStatus(data=data,path="/listar_senhas")
+   
+    
+
          
 
 @app.get("/criar_nova_senha")
